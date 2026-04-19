@@ -148,8 +148,7 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
                 child: const Icon(
                   LucideIcons.upload,
                   size: 36,
-                  strokeWidth: 1.5,
-                  color: AppColors.primaryBlue,
+                                    color: AppColors.primaryBlue,
                 ),
               )
                   .animate()
@@ -228,8 +227,7 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
                 child: const Icon(
                   LucideIcons.fileText,
                   size: 22,
-                  strokeWidth: 1.5,
-                  color: AppColors.primaryBlue,
+                                    color: AppColors.primaryBlue,
                 ),
               ),
               const SizedBox(width: 16),

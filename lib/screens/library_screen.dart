@@ -191,7 +191,7 @@ class LibraryScreen extends ConsumerWidget {
               child: Icon(
                 LucideIcons.fileText,
                 size: 24,
-                strokeWidth: 1.5,
+                
                 color: isDark ? AppColors.primaryBlue : const Color(0xFF1C1C1E),
               ),
             ),
@@ -235,7 +235,7 @@ class LibraryScreen extends ConsumerWidget {
                 child: Icon(
                   LucideIcons.trash,
                   size: 20,
-                  strokeWidth: 1.5,
+                  
                   color: AppColors.gray400,
                 ),
               ),

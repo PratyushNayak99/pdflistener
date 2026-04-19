@@ -65,11 +65,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         HeaderIconButton(
-                          icon: const Icon(LucideIcons.helpCircle, strokeWidth: 1.5),
+                          icon: const Icon(LucideIcons.helpCircle),
                           onTap: () => ref.read(currentScreenProvider.notifier).state = AppScreen.help,
                         ),
                         HeaderIconButton(
-                          icon: const Icon(LucideIcons.bell, strokeWidth: 1.5),
+                          icon: const Icon(LucideIcons.bell),
                           badgeCount: _unreadCount > 0 ? _unreadCount : null,
                           onTap: () => ref.read(currentScreenProvider.notifier).state = AppScreen.notifications,
                         ),
@@ -205,8 +205,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             child: const Icon(
               LucideIcons.fileText,
               size: 22,
-              strokeWidth: 1.5,
-              color: AppColors.primaryBlue,
+                            color: AppColors.primaryBlue,
             ),
           ),
           const SizedBox(width: 16),
@@ -266,7 +265,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ActionCard(
           title: 'Convert',
           subtitle: 'PDF, DOCX, Images...',
-          icon: const Icon(LucideIcons.upload, strokeWidth: 1.5),
+          icon: const Icon(LucideIcons.upload),
           onClick: () => ref.read(currentScreenProvider.notifier).state = AppScreen.upload,
           centered: true,
           delay: 100.ms,
@@ -279,7 +278,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               child: ActionCard(
                 title: 'Library',
                 subtitle: 'Your saved audio',
-                icon: const Icon(LucideIcons.library, strokeWidth: 1.5),
+                icon: const Icon(LucideIcons.library),
                 onClick: () => ref.read(currentScreenProvider.notifier).state = AppScreen.library,
                 delay: 200.ms,
               ),
@@ -289,7 +288,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               child: ActionCard(
                 title: 'Recent',
                 subtitle: 'Continue listening',
-                icon: const Icon(LucideIcons.clock, strokeWidth: 1.5),
+                icon: const Icon(LucideIcons.clock),
                 onClick: () => ref.read(currentScreenProvider.notifier).state = AppScreen.player,
                 delay: 300.ms,
               ),
@@ -336,8 +335,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     child: Icon(
                       LucideIcons.settings,
                       size: 28,
-                      strokeWidth: 1.5,
-                      color: isDark ? Colors.white : const Color(0xFF1C1C1E),
+                                            color: isDark ? Colors.white : const Color(0xFF1C1C1E),
                     ),
                   ),
                   Expanded(
@@ -345,8 +343,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       child: Icon(
                         LucideIcons.user,
                         size: 24,
-                        strokeWidth: 1.5,
-                        color: isDark ? const Color(0xFF1C1C1E) : Colors.white,
+                                                color: isDark ? const Color(0xFF1C1C1E) : Colors.white,
                       ),
                     ),
                   ),
@@ -390,8 +387,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               child: const Icon(
                 LucideIcons.plus,
                 size: 32,
-                strokeWidth: 1.5,
-                color: AppColors.textPrimaryLight,
+                                color: AppColors.textPrimaryLight,
               ),
             ),
           ),

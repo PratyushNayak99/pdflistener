@@ -181,7 +181,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
               child: const Icon(
                 LucideIcons.settings,
                 size: 22,
-                strokeWidth: 1.5,
+                
                 color: Colors.white,
               ),
             ),
@@ -243,7 +243,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
               Icon(
                 LucideIcons.headphones,
                 size: 80,
-                strokeWidth: 1.5,
+                
                 color: _isPlaying ? Colors.white : Colors.white.withOpacity(0.4),
               ),
             ],
@@ -385,7 +385,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                 child: const Icon(
                   LucideIcons.rewind,
                   size: 32,
-                  strokeWidth: 1.5,
+                  
                   color: Colors.white,
                 ),
               ),
@@ -415,7 +415,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                   child: Icon(
                     _isPlaying ? LucideIcons.pause : LucideIcons.play,
                     size: 36,
-                    strokeWidth: 1.5,
+                    
                     color: Colors.black,
                   ),
                 ),
@@ -434,7 +434,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                 child: const Icon(
                   LucideIcons.fastForward,
                   size: 32,
-                  strokeWidth: 1.5,
+                  
                   color: Colors.white,
                 ),
               ),
@@ -455,7 +455,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
               child: Icon(
                 LucideIcons.bookmark,
                 size: 22,
-                strokeWidth: 1.5,
+                
                 color: Colors.white,
               ),
             ),

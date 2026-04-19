@@ -9,7 +9,7 @@ import '../providers/theme_provider.dart';
 /// - BorderRadius: 28
 /// - Height: 64
 /// - Focus ring on focus
-class SearchBarWidget extends StatelessWidget {
+class SearchBarWidget extends StatefulWidget {
   final String value;
   final ValueChanged<String> onChanged;
   final VoidCallback? onVoiceTap;
@@ -22,6 +22,33 @@ class SearchBarWidget extends StatelessWidget {
     this.onVoiceTap,
     this.placeholder = 'Search documents...',
   });
+
+  @override
+  State<SearchBarWidget> createState() => _SearchBarWidgetState();
+}
+
+class _SearchBarWidgetState extends State<SearchBarWidget> {
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.value);
+  }
+
+  @override
+  void didUpdateWidget(SearchBarWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.value != oldWidget.value) {
+      _controller.text = widget.value;
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,14 +80,13 @@ class SearchBarWidget extends StatelessWidget {
           Icon(
             LucideIcons.search,
             size: 22,
-            strokeWidth: 2,
             color: AppColors.gray400,
           ),
           const SizedBox(width: 12),
           Expanded(
             child: TextField(
-              value: value,
-              onChanged: onChanged,
+              controller: _controller,
+              onChanged: widget.onChanged,
               style: TextStyle(
                 fontSize: 17,
                 fontWeight: FontWeight.w500,
@@ -72,7 +98,7 @@ class SearchBarWidget extends StatelessWidget {
                 isDense: true,
                 contentPadding: EdgeInsets.zero,
                 border: InputBorder.none,
-                hintText: placeholder,
+                hintText: widget.placeholder,
                 hintStyle: const TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w500,
@@ -84,9 +110,9 @@ class SearchBarWidget extends StatelessWidget {
                   : AppColors.textPrimaryLight,
             ),
           ),
-          if (value.isNotEmpty)
+          if (widget.value.isNotEmpty)
             AnimatedScaleButton(
-              onTap: () => onChanged(''),
+              onTap: () => widget.onChanged(''),
               child: Padding(
                 padding: const EdgeInsets.all(8),
                 child: Text(
@@ -100,7 +126,7 @@ class SearchBarWidget extends StatelessWidget {
             ),
           const SizedBox(width: 8),
           AnimatedScaleButton(
-            onTap: onVoiceTap,
+            onTap: widget.onVoiceTap,
             child: Container(
               width: 40,
               height: 40,
@@ -113,7 +139,6 @@ class SearchBarWidget extends StatelessWidget {
               child: Icon(
                 LucideIcons.mic,
                 size: 20,
-                strokeWidth: 2,
                 color: isDark
                     ? AppColors.textPrimaryDark
                     : AppColors.textPrimaryLight,

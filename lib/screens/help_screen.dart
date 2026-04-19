@@ -158,7 +158,7 @@ class HelpScreen extends ConsumerWidget {
               child: Icon(
                 icon,
                 size: 22,
-                strokeWidth: 1.5,
+                
                 color: AppColors.primaryBlue,
               ),
             ),
@@ -235,7 +235,7 @@ class HelpScreen extends ConsumerWidget {
             child: const Icon(
               LucideIcons.headphones,
               size: 40,
-              strokeWidth: 1.5,
+              
               color: AppColors.primaryBlue,
             ),
           ),

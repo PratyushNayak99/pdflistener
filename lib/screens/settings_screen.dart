@@ -146,7 +146,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 child: const Icon(
                   LucideIcons.user,
                   size: 32,
-                  strokeWidth: 1.5,
+                  
                   color: AppColors.primaryBlue,
                 ),
               ),
@@ -348,7 +348,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             child: Icon(
               icon,
               size: 22,
-              strokeWidth: 1.5,
+              
               color: AppColors.primaryBlue,
             ),
           ),
@@ -449,7 +449,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                           child: const Icon(
                             LucideIcons.folder,
                             size: 20,
-                            strokeWidth: 1.5,
+                            
                             color: AppColors.primaryBlue,
                           ),
                         ),
@@ -553,7 +553,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               const Icon(
                 LucideIcons.logOut,
                 size: 22,
-                strokeWidth: 1.5,
+                
                 color: Color(0xFFFF3B30),
               ),
               const SizedBox(width: 8),

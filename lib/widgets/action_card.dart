@@ -110,12 +110,7 @@ class ActionCard extends StatelessWidget {
       )
       .animate()
       .fadeIn(duration: 400.ms, delay: delay)
-      .slideY(begin: 0.1, end: 0, duration: 400.ms, delay: delay),
-    )
-    // Wrap with scale animation on tap
-    .shimmer(
-      duration: const Duration(milliseconds: 150),
-      color: Colors.white.withOpacity(0.1),
-    );
+      .slideY(begin: 0.1, end: 0, duration: 400.ms, delay: delay);
+  }
   }
 }

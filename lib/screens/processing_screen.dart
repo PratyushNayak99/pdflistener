@@ -68,7 +68,7 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
                     child: Icon(
                       LucideIcons.fileAudio,
                       size: 28,
-                      strokeWidth: 1.5,
+                      
                       color: isDark ? Colors.black : Colors.white,
                     ),
                   ),

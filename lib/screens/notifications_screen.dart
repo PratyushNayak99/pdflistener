@@ -149,7 +149,7 @@ class NotificationsScreen extends ConsumerWidget {
             child: Icon(
               getIcon(),
               size: 22,
-              strokeWidth: 1.5,
+              
               color: notif.unread
                   ? AppColors.primaryBlue
                   : isDark

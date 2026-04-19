@@ -126,8 +126,7 @@ class LoginScreen extends StatelessWidget {
                       Icon(
                         LucideIcons.fileText,
                         size: 64,
-                        strokeWidth: 1.5,
-                        color: isDark ? Colors.white : const Color(0xFF1C1C1E),
+                                                color: isDark ? Colors.white : const Color(0xFF1C1C1E),
                       ),
                       const SizedBox(height: 24),
                       // Animated Audio Waveform inside the Doc
@@ -167,7 +166,6 @@ class LoginScreen extends StatelessWidget {
                 child: Icon(
                   LucideIcons.headphones,
                   size: 36,
-                  strokeWidth: 2,
                   color: isDark ? Colors.white : const Color(0xFF1C1C1E),
                 ),
               )
