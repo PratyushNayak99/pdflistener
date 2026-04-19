@@ -112,5 +112,4 @@ class ActionCard extends StatelessWidget {
       .fadeIn(duration: 400.ms, delay: delay)
       .slideY(begin: 0.1, end: 0, duration: 400.ms, delay: delay);
   }
-  }
 }
