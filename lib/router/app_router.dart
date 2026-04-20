@@ -34,8 +34,10 @@ final goRouterProvider = Provider<GoRouter>((ref) => appRouter);
 final routerSyncProvider = Provider<void>((ref) {
   ref.listen<AppScreen>(currentScreenProvider, (prev, next) {
     final path = _screenPaths[next];
-    if (path != null && ref.read(goRouterProvider).location != path) {
-      ref.read(goRouterProvider).go(path);
+    if (path != null) {
+      final router = ref.read(goRouterProvider);
+      // Always navigate when screen changes
+      router.go(path);
     }
   });
 });

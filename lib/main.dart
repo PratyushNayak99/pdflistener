@@ -9,13 +9,6 @@ import 'router/app_router.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Disable all debug overlays
-  debugShowSizeOverlay = false;
-  debugShowPaintedImages = false;
-  debugRepaintRainbow = false;
-  debugShowMaterialGrid = false;
-  debugCheckElevations = false;
-
   // Set status bar style
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
