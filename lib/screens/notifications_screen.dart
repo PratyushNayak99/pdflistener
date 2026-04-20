@@ -23,9 +23,9 @@ class NotificationsScreen extends ConsumerWidget {
     final isDark = themeMode == ThemeMode.dark;
     final notifications = ref.watch(notificationsProvider);
 
-    return Container(
-      color: isDark ? AppColors.scaffoldBackgroundDark : AppColors.scaffoldBackgroundLight,
-      child: SafeArea(
+    return Scaffold(
+      backgroundColor: isDark ? AppColors.scaffoldBackgroundDark : AppColors.scaffoldBackgroundLight,
+      body: SafeArea(
         child: CustomScrollView(
           slivers: [
             // Header

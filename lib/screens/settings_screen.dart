@@ -39,9 +39,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     final themeMode = ref.watch(themeProvider);
     final isDark = themeMode == ThemeMode.dark;
 
-    return Container(
-      color: isDark ? AppColors.scaffoldBackgroundDark : AppColors.scaffoldBackgroundLight,
-      child: SafeArea(
+    return Scaffold(
+      backgroundColor: isDark ? AppColors.scaffoldBackgroundDark : AppColors.scaffoldBackgroundLight,
+      body: SafeArea(
         child: CustomScrollView(
           slivers: [
             // Header

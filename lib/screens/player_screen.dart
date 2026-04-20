@@ -86,9 +86,9 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
         ? displayPosition.inMilliseconds / _totalDuration.inMilliseconds
         : 0.0;
 
-    return Container(
-      color: isDark ? Colors.black : const Color(0xFF1C1C1E),
-      child: SafeArea(
+    return Scaffold(
+      backgroundColor: isDark ? Colors.black : const Color(0xFF1C1C1E),
+      body: SafeArea(
         child: Column(
           children: [
             // Header

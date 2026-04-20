@@ -54,9 +54,9 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
     final files = ref.watch(filesProvider);
     final recentFile = files.isNotEmpty ? files.first : null;
 
-    return Container(
-      color: isDark ? AppColors.scaffoldBackgroundDark : const Color(0xFFF8F9FB),
-      child: SafeArea(
+    return Scaffold(
+      backgroundColor: isDark ? AppColors.scaffoldBackgroundDark : const Color(0xFFF8F9FB),
+      body: SafeArea(
         child: Column(
           children: [
             // Header

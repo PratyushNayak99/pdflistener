@@ -22,9 +22,9 @@ class LoginScreen extends ConsumerWidget {
     final themeMode = ref.watch(themeProvider);
     final isDark = themeMode == ThemeMode.dark;
 
-    return Container(
-      color: isDark ? Colors.black : Colors.white,
-      child: Stack(
+    return Scaffold(
+      backgroundColor: isDark ? Colors.black : Colors.white,
+      body: Stack(
         children: [
           // Decorative clean line background (SVG replacement)
           Positioned.fill(

@@ -53,9 +53,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final isDark = themeMode == ThemeMode.dark;
     final files = _filteredFiles;
 
-    return Container(
-      color: isDark ? AppColors.scaffoldBackgroundDark : AppColors.scaffoldBackgroundLight,
-      child: SafeArea(
+    return Scaffold(
+      backgroundColor: isDark ? AppColors.scaffoldBackgroundDark : AppColors.scaffoldBackgroundLight,
+      body: SafeArea(
         child: Stack(
           children: [
             CustomScrollView(

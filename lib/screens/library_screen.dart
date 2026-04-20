@@ -23,9 +23,9 @@ class LibraryScreen extends ConsumerWidget {
     final isDark = themeMode == ThemeMode.dark;
     final files = ref.watch(filesProvider);
 
-    return Container(
-      color: isDark ? AppColors.scaffoldBackgroundDark : AppColors.scaffoldBackgroundLight,
-      child: SafeArea(
+    return Scaffold(
+      backgroundColor: isDark ? AppColors.scaffoldBackgroundDark : AppColors.scaffoldBackgroundLight,
+      body: SafeArea(
         child: CustomScrollView(
           slivers: [
             // Header

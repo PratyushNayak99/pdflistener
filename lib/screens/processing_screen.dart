@@ -34,9 +34,9 @@ class _ProcessingScreenState extends ConsumerState<ProcessingScreen> {
     final themeMode = ref.watch(themeProvider);
     final isDark = themeMode == ThemeMode.dark;
 
-    return Container(
-      color: isDark ? AppColors.scaffoldBackgroundDark : const Color(0xFFF8F9FB),
-      child: SafeArea(
+    return Scaffold(
+      backgroundColor: isDark ? AppColors.scaffoldBackgroundDark : const Color(0xFFF8F9FB),
+      body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
