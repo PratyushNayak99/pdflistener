@@ -6,8 +6,9 @@
 -keep class io.flutter.**  { *; }
 -keep class io.flutter.plugins.**  { *; }
 
-# File picker
--keep class com.mr.flutter.plugin.filepicker.** { *; }
+## Play Store Split - keep for Flutter but ignore missing classes
+-dontwarn com.google.android.play.core.**
+-dontwarn com.google.android.gms.**
 
-# Just audio
--keep class com.ryanheise.audioservice.** { *; }
+## Keep Flutter embedding
+-keep class io.flutter.embedding.android.** { *; }
