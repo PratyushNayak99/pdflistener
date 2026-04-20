@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 /// Theme Provider - Manages light/dark mode state
 /// Replaces React's isDarkMode state and context passing
@@ -61,7 +62,7 @@ class AppColors {
 
 /// Typography - Inter font with SF Pro-like metrics
 class AppTextStyles {
-  static const String fontFamily = 'Inter';
+  static TextStyle get base => GoogleFonts.inter();
 
   // Giant Quirky Typography (Login screen)
   static const TextStyle displayLarge = TextStyle(
@@ -126,24 +127,41 @@ ThemeData lightTheme = ThemeData(
   primaryColor: AppColors.primaryBlue,
   cardColor: AppColors.cardBackgroundLight,
   canvasColor: AppColors.gray50,
-
-  textTheme: const TextTheme(
-    displayLarge: AppTextStyles.displayLarge,
-    headlineLarge: AppTextStyles.headline,
-    titleMedium: AppTextStyles.title,
-    bodyLarge: AppTextStyles.body,
-    bodyMedium: AppTextStyles.caption,
-  ).apply(
-    fontFamily: AppTextStyles.fontFamily,
-    displayColor: AppColors.textPrimaryLight,
-    bodyColor: AppColors.textPrimaryLight,
+  textTheme: GoogleFonts.interTextTheme().copyWith(
+    displayLarge: const TextStyle(
+      fontSize: 48,
+      fontWeight: FontWeight.w500,
+      letterSpacing: -1.0,
+      height: 0.95,
+      color: AppColors.textPrimaryLight,
+    ),
+    headlineLarge: const TextStyle(
+      fontSize: 26,
+      fontWeight: FontWeight.bold,
+      letterSpacing: -0.3,
+      color: AppColors.textPrimaryLight,
+    ),
+    titleMedium: const TextStyle(
+      fontSize: 22,
+      fontWeight: FontWeight.bold,
+      letterSpacing: -0.2,
+      color: AppColors.textPrimaryLight,
+    ),
+    bodyLarge: const TextStyle(
+      fontSize: 17,
+      fontWeight: FontWeight.w500,
+      color: AppColors.textPrimaryLight,
+    ),
+    bodyMedium: const TextStyle(
+      fontSize: 15,
+      fontWeight: FontWeight.w500,
+      color: AppColors.textPrimaryLight,
+    ),
   ),
-
   iconTheme: const IconThemeData(
     color: AppColors.textPrimaryLight,
     size: 24,
   ),
-
   appBarTheme: const AppBarTheme(
     backgroundColor: Colors.transparent,
     elevation: 0,
@@ -158,24 +176,41 @@ ThemeData darkTheme = ThemeData(
   primaryColor: AppColors.primaryBlue,
   cardColor: AppColors.cardBackgroundDark,
   canvasColor: AppColors.gray800,
-
-  textTheme: const TextTheme(
-    displayLarge: AppTextStyles.displayLarge,
-    headlineLarge: AppTextStyles.headline,
-    titleMedium: AppTextStyles.title,
-    bodyLarge: AppTextStyles.body,
-    bodyMedium: AppTextStyles.caption,
-  ).apply(
-    fontFamily: AppTextStyles.fontFamily,
-    displayColor: AppColors.textPrimaryDark,
-    bodyColor: AppColors.textPrimaryDark,
+  textTheme: GoogleFonts.interTextTheme().copyWith(
+    displayLarge: const TextStyle(
+      fontSize: 48,
+      fontWeight: FontWeight.w500,
+      letterSpacing: -1.0,
+      height: 0.95,
+      color: AppColors.textPrimaryDark,
+    ),
+    headlineLarge: const TextStyle(
+      fontSize: 26,
+      fontWeight: FontWeight.bold,
+      letterSpacing: -0.3,
+      color: AppColors.textPrimaryDark,
+    ),
+    titleMedium: const TextStyle(
+      fontSize: 22,
+      fontWeight: FontWeight.bold,
+      letterSpacing: -0.2,
+      color: AppColors.textPrimaryDark,
+    ),
+    bodyLarge: const TextStyle(
+      fontSize: 17,
+      fontWeight: FontWeight.w500,
+      color: AppColors.textPrimaryDark,
+    ),
+    bodyMedium: const TextStyle(
+      fontSize: 15,
+      fontWeight: FontWeight.w500,
+      color: AppColors.textPrimaryDark,
+    ),
   ),
-
   iconTheme: const IconThemeData(
     color: AppColors.textPrimaryDark,
     size: 24,
   ),
-
   appBarTheme: const AppBarTheme(
     backgroundColor: Colors.transparent,
     elevation: 0,
