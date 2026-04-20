@@ -26,7 +26,7 @@ class HelpScreen extends ConsumerWidget {
           slivers: [
             // Header
             SliverToBoxAdapter(
-              child: _buildHeader(isDark),
+              child: _buildHeader(isDark, ref),
             ),
             // Support Options
             SliverToBoxAdapter(
@@ -45,7 +45,7 @@ class HelpScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildHeader(bool isDark) {
+  Widget _buildHeader(bool isDark, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.only(top: 12, left: 24, right: 24, bottom: 24),
       child: Row(
