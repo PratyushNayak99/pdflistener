@@ -245,7 +245,7 @@ class LibraryScreen extends ConsumerWidget {
             const SizedBox(width: 8),
             // Play button
             AnimatedScaleButton(
-              onTap: () => context.navigateTo(AppScreen.player),
+              onTap: () => ref.navigateTo(AppScreen.player),
               child: Container(
                 width: 48,
                 height: 48,

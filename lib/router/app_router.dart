@@ -83,12 +83,12 @@ final GoRouter appRouter = GoRouter(
   ],
 );
 
-/// Extension to navigate via BuildContext
-extension RouterX on BuildContext {
+/// Extension to navigate via WidgetRef
+extension RouterX on WidgetRef {
   void navigateTo(AppScreen screen) {
     final path = _screenPaths[screen];
     if (path != null) {
-      go(path);
+      context.go(path);
     }
   }
 }
