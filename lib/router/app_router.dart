@@ -92,3 +92,13 @@ extension RouterX on WidgetRef {
     }
   }
 }
+
+/// Extension to navigate via BuildContext
+extension RouterXContext on BuildContext {
+  void navigateTo(AppScreen screen) {
+    final path = _screenPaths[screen];
+    if (path != null) {
+      go(path);
+    }
+  }
+}

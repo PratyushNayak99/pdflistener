@@ -7,6 +7,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
 import '../providers/theme_provider.dart';
 import '../providers/app_providers.dart';
+import '../router/app_router.dart';
 import '../models/file_item.dart';
 import '../widgets/animated_scale_button.dart';
 
