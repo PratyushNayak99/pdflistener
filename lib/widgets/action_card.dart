@@ -2,12 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../providers/theme_provider.dart';
 
-/// ActionCard - Dashboard action cards (Convert, Library, Recent)
-///
-/// React equivalent: ActionCard component with motion.div
-/// - GridView layout with 2 columns
-/// - Fade in + slide up animation on appear
-/// - Scale down on tap
 class ActionCard extends StatelessWidget {
   final String title;
   final String subtitle;
@@ -49,33 +43,23 @@ class ActionCard extends StatelessWidget {
           ],
         ),
         child: Column(
-          crossAxisAlignment: centered
-              ? CrossAxisAlignment.center
-              : CrossAxisAlignment.start,
-          mainAxisAlignment: centered
-              ? MainAxisAlignment.center
-              : MainAxisAlignment.start,
+          crossAxisAlignment: centered ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+          mainAxisAlignment: centered ? MainAxisAlignment.center : MainAxisAlignment.start,
           children: [
             Container(
               width: 52,
               height: 52,
               decoration: BoxDecoration(
-                color: isDark
-                    ? const Color(0xFF333333)
-                    : const Color(0xFFF8F9FB),
+                color: isDark ? const Color(0xFF333333) : const Color(0xFFF8F9FB),
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
-                  color: isDark
-                      ? const Color(0xFF444444)
-                      : const Color(0xFFE5E7EB),
+                  color: isDark ? const Color(0xFF444444) : const Color(0xFFE5E7EB),
                   width: 1,
                 ),
               ),
               child: IconTheme(
                 data: IconThemeData(
-                  color: isDark
-                      ? AppColors.textPrimaryDark
-                      : AppColors.textPrimaryLight,
+                  color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
                   size: 26,
                 ),
                 child: icon,
@@ -90,9 +74,7 @@ class ActionCard extends StatelessWidget {
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 letterSpacing: -0.3,
-                color: isDark
-                    ? AppColors.textPrimaryDark
-                    : AppColors.textPrimaryLight,
+                color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
               ),
             ),
             const SizedBox(height: 4),
@@ -108,8 +90,9 @@ class ActionCard extends StatelessWidget {
           ],
         ),
       )
-      .animate()
-      .fadeIn(duration: 400.ms, delay: delay)
-      .slideY(begin: 0.1, end: 0, duration: 400.ms, delay: delay);
+        .animate()
+        .fadeIn(duration: 400.ms, delay: delay)
+        .slideY(begin: 0.1, end: 0, duration: 400.ms, delay: delay),
+    );
   }
 }
