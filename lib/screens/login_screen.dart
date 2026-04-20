@@ -190,6 +190,7 @@ class LoginScreen extends ConsumerWidget {
         return Container(
           width: 10,
           margin: const EdgeInsets.only(right: 6),
+          height: 48,
           decoration: BoxDecoration(
             color: isPrimary
                 ? AppColors.primaryBlue
@@ -198,31 +199,14 @@ class LoginScreen extends ConsumerWidget {
                     : const Color(0xFF1C1C1E),
             borderRadius: BorderRadius.circular(5),
           ),
-          child: TweenAnimationBuilder(
-            duration: Duration(milliseconds: 1200 + i * 150),
-            tween: Tween<double>(begin: 0.2, end: 1.0),
-            builder: (context, value, child) {
-              return Transform.scale(
-                scaleY: value,
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  height: 48,
-                  decoration: BoxDecoration(
-                    color: isPrimary
-                        ? AppColors.primaryBlue
-                        : isDark
-                            ? Colors.white
-                            : const Color(0xFF1C1C1E),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-              );
-            },
-            onEnd: () {
-              // Restart animation via parent repeater
-            },
-          ),
-        );
+        ).animate(onPlay: (controller) => controller.repeat(reverse: true))
+         .scaleY(
+           begin: 0.2, 
+           end: 1.0, 
+           duration: Duration(milliseconds: 1200 + i * 150), 
+           curve: Curves.easeInOut,
+           alignment: Alignment.bottomCenter
+         );
       }),
     );
   }

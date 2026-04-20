@@ -342,28 +342,32 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     ),
                   ),
                   Expanded(
-                    child: Center(
-                      child: Icon(
-                        LucideIcons.user,
-                        size: 24,
-                                                color: isDark ? const Color(0xFF1C1C1E) : Colors.white,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 8,
-                    right: 12,
-                    child: Container(
-                      width: 8,
-                      height: 8,
-                      decoration: BoxDecoration(
-                        color: AppColors.primaryBlue,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: isDark ? Colors.white : const Color(0xFF1C1C1E),
-                          width: 2,
+                    child: Stack(
+                      children: [
+                        Center(
+                          child: Icon(
+                            LucideIcons.user,
+                            size: 24,
+                                                    color: isDark ? const Color(0xFF1C1C1E) : Colors.white,
+                          ),
                         ),
-                      ),
+                        Positioned(
+                          top: 8,
+                          right: 12,
+                          child: Container(
+                            width: 8,
+                            height: 8,
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryBlue,
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: isDark ? Colors.white : const Color(0xFF1C1C1E),
+                                width: 2,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
