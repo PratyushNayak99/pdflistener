@@ -32,11 +32,7 @@ class PdfListenerApp extends ConsumerWidget {
 
     return MaterialApp.router(
       title: 'PDF Listener',
-      debugShowMaterialGrid: false,
       debugShowCheckedModeBanner: false,
-      debugShowPerformanceOverlay: false,
-      checkerboardRasterCacheImages: false,
-      checkerboardOffscreenLayers: false,
 
       // Theme Configuration
       themeMode: themeMode,
