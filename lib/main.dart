@@ -3,10 +3,18 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'providers/theme_provider.dart';
+import 'providers/app_providers.dart';
 import 'router/app_router.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Disable all debug overlays
+  debugShowSizeOverlay = false;
+  debugShowPaintedImages = false;
+  debugRepaintRainbow = false;
+  debugShowMaterialGrid = false;
+  debugCheckElevations = false;
 
   // Set status bar style
   SystemChrome.setSystemUIOverlayStyle(
@@ -30,6 +38,9 @@ class PdfListenerApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final themeMode = ref.watch(themeProvider);
 
+    // Initialize router sync listener
+    ref.watch(routerSyncProvider);
+
     return MaterialApp.router(
       title: 'PDF Listener',
       debugShowCheckedModeBanner: false,
@@ -40,7 +51,7 @@ class PdfListenerApp extends ConsumerWidget {
       darkTheme: darkTheme,
 
       // Router Configuration
-      routerConfig: appRouter,
+      routerConfig: ref.watch(goRouterProvider),
 
       // Builder for global overlays
       builder: (context, child) {

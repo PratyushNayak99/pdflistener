@@ -35,8 +35,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final themeMode = ref.watch(themeProvider);
+    final isDark = themeMode == ThemeMode.dark;
 
     return Container(
       color: isDark ? AppColors.scaffoldBackgroundDark : AppColors.scaffoldBackgroundLight,
@@ -78,7 +78,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       child: Row(
         children: [
           AnimatedScaleButton(
-            onTap: () => ref.read(currentScreenProvider.notifier).state = AppScreen.home,
+            onTap: () => context.navigateTo(AppScreen.home),
             child: Container(
               width: 48,
               height: 48,
@@ -535,7 +535,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     return Container(
       margin: const EdgeInsets.only(left: 24, right: 24),
       child: AnimatedScaleButton(
-        onTap: () => ref.read(currentScreenProvider.notifier).state = AppScreen.login,
+        onTap: () => context.navigateTo(AppScreen.login),
         child: Container(
           width: double.infinity,
           padding: const EdgeInsets.all(20),

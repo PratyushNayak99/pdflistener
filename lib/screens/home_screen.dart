@@ -48,7 +48,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final themeMode = ref.watch(themeProvider);
+    final isDark = themeMode == ThemeMode.dark;
     final files = _filteredFiles;
 
     return Container(
@@ -67,12 +68,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       children: [
                         HeaderIconButton(
                           icon: const Icon(LucideIcons.helpCircle),
-                          onTap: () => ref.read(currentScreenProvider.notifier).state = AppScreen.help,
+                          onTap: () => context.navigateTo(AppScreen.help),
                         ),
                         HeaderIconButton(
                           icon: const Icon(LucideIcons.bell),
                           badgeCount: _unreadCount > 0 ? _unreadCount : null,
-                          onTap: () => ref.read(currentScreenProvider.notifier).state = AppScreen.notifications,
+                          onTap: () => context.navigateTo(AppScreen.notifications),
                         ),
                       ],
                     ),
@@ -239,7 +240,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ),
           const SizedBox(width: 12),
           AnimatedScaleButton(
-            onTap: () => ref.read(currentScreenProvider.notifier).state = AppScreen.player,
+            onTap: () => context.navigateTo(AppScreen.player),
             child: Container(
               width: 40,
               height: 40,
@@ -267,7 +268,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           title: 'Convert',
           subtitle: 'PDF, DOCX, Images...',
           icon: const Icon(LucideIcons.upload),
-          onClick: () => ref.read(currentScreenProvider.notifier).state = AppScreen.upload,
+          onClick: () => context.navigateTo(AppScreen.upload),
           centered: true,
           delay: 100.ms,
         ),
@@ -280,7 +281,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 title: 'Library',
                 subtitle: 'Your saved audio',
                 icon: const Icon(LucideIcons.library),
-                onClick: () => ref.read(currentScreenProvider.notifier).state = AppScreen.library,
+                onClick: () => context.navigateTo(AppScreen.library),
                 delay: 200.ms,
               ),
             ),
@@ -290,7 +291,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 title: 'Recent',
                 subtitle: 'Continue listening',
                 icon: const Icon(LucideIcons.clock),
-                onClick: () => ref.read(currentScreenProvider.notifier).state = AppScreen.player,
+                onClick: () => context.navigateTo(AppScreen.player),
                 delay: 300.ms,
               ),
             ),
@@ -310,7 +311,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         children: [
           // Settings/Profile button
           AnimatedScaleButton(
-            onTap: () => ref.read(currentScreenProvider.notifier).state = AppScreen.settings,
+            onTap: () => context.navigateTo(AppScreen.settings),
             child: Container(
               width: 114,
               height: 56,
@@ -370,7 +371,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ),
           // Add FAB
           AnimatedScaleButton(
-            onTap: () => ref.read(currentScreenProvider.notifier).state = AppScreen.upload,
+            onTap: () => context.navigateTo(AppScreen.upload),
             child: Container(
               width: 64,
               height: 64,

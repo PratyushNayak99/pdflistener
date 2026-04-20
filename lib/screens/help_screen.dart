@@ -17,7 +17,8 @@ class HelpScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final themeMode = ref.watch(themeProvider);
+    final isDark = themeMode == ThemeMode.dark;
 
     return Container(
       color: isDark ? AppColors.scaffoldBackgroundDark : AppColors.scaffoldBackgroundLight,
@@ -51,7 +52,7 @@ class HelpScreen extends ConsumerWidget {
       child: Row(
         children: [
           AnimatedScaleButton(
-            onTap: () => ref.read(currentScreenProvider.notifier).state = AppScreen.home,
+            onTap: () => ref.navigateTo(AppScreen.home),
             child: Container(
               width: 48,
               height: 48,

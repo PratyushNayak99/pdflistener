@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import '../providers/theme_provider.dart';
 
@@ -9,13 +10,13 @@ import '../providers/theme_provider.dart';
 /// - 3 expanding/fading circles
 /// - Center icon
 /// - Auto-navigate to player after 2.5 seconds
-class ProcessingScreen extends StatefulWidget {
+class ProcessingScreen extends ConsumerStatefulWidget {
   final VoidCallback onComplete;
 
   const ProcessingScreen({super.key, required this.onComplete});
 
   @override
-  State<ProcessingScreen> createState() => _ProcessingScreenState();
+  ConsumerState<ProcessingScreen> createState() => _ProcessingScreenState();
 }
 
 class _ProcessingScreenState extends State<ProcessingScreen> {
@@ -30,7 +31,8 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final themeMode = ref.watch(themeProvider);
+    final isDark = themeMode == ThemeMode.dark;
 
     return Container(
       color: isDark ? AppColors.scaffoldBackgroundDark : const Color(0xFFF8F9FB),

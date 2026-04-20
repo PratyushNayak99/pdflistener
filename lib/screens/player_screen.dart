@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:just_audio/just_audio.dart';
 import '../providers/theme_provider.dart';
@@ -12,11 +13,11 @@ import '../widgets/animated_scale_button.dart';
 /// - Progress bar with drag
 /// - Play/pause, skip, speed control
 /// - Bookmark toggle
-class PlayerScreen extends StatefulWidget {
+class PlayerScreen extends ConsumerStatefulWidget {
   const PlayerScreen({super.key});
 
   @override
-  State<PlayerScreen> createState() => _PlayerScreenState();
+  ConsumerState<PlayerScreen> createState() => _PlayerScreenState();
 }
 
 class _PlayerScreenState extends State<PlayerScreen> {
@@ -78,7 +79,8 @@ class _PlayerScreenState extends State<PlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final themeMode = ref.watch(themeProvider);
+    final isDark = themeMode == ThemeMode.dark;
     final displayPosition = _isDragging ? _dragPosition : _position;
     final progressPercent = _totalDuration.inMilliseconds > 0
         ? displayPosition.inMilliseconds / _totalDuration.inMilliseconds

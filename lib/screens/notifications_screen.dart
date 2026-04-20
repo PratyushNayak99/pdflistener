@@ -18,7 +18,8 @@ class NotificationsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final themeMode = ref.watch(themeProvider);
+    final isDark = themeMode == ThemeMode.dark;
     final notifications = ref.watch(notificationsProvider);
 
     return Container(
@@ -58,7 +59,7 @@ class NotificationsScreen extends ConsumerWidget {
       child: Row(
         children: [
           AnimatedScaleButton(
-            onTap: () => ref.read(currentScreenProvider.notifier).state = AppScreen.home,
+            onTap: () => ref.navigateTo(AppScreen.home),
             child: Container(
               width: 48,
               height: 48,

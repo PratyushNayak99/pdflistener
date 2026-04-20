@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import '../providers/theme_provider.dart';
 import '../widgets/animated_scale_button.dart';
@@ -11,14 +12,15 @@ import '../widgets/animated_scale_button.dart';
 /// - Giant quirky typography
 /// - Document card with animated waveform
 /// - Floating headphones icon
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends ConsumerWidget {
   final VoidCallback onLogin;
 
   const LoginScreen({super.key, required this.onLogin});
 
   @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeProvider);
+    final isDark = themeMode == ThemeMode.dark;
 
     return Container(
       color: isDark ? Colors.black : Colors.white,

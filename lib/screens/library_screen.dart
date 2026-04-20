@@ -18,7 +18,8 @@ class LibraryScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final themeMode = ref.watch(themeProvider);
+    final isDark = themeMode == ThemeMode.dark;
     final files = ref.watch(filesProvider);
 
     return Container(
@@ -62,7 +63,7 @@ class LibraryScreen extends ConsumerWidget {
       child: Row(
         children: [
           AnimatedScaleButton(
-            onTap: () => ref.read(currentScreenProvider.notifier).state = AppScreen.home,
+            onTap: () => ref.navigateTo(AppScreen.home),
             child: Container(
               width: 48,
               height: 48,
@@ -244,7 +245,7 @@ class LibraryScreen extends ConsumerWidget {
             const SizedBox(width: 8),
             // Play button
             AnimatedScaleButton(
-              onTap: () => ref.read(currentScreenProvider.notifier).state = AppScreen.player,
+              onTap: () => context.navigateTo(AppScreen.player),
               child: Container(
                 width: 48,
                 height: 48,

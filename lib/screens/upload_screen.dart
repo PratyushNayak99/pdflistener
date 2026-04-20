@@ -37,7 +37,7 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
 
       if (result != null && result.files.single.path != null) {
         // Navigate to processing screen
-        ref.read(currentScreenProvider.notifier).state = AppScreen.processing;
+        ref.context.navigateTo(AppScreen.processing);
       }
     } catch (e) {
       debugPrint('Error picking file: $e');
@@ -48,7 +48,8 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final themeMode = ref.watch(themeProvider);
+    final isDark = themeMode == ThemeMode.dark;
     final files = ref.watch(filesProvider);
     final recentFile = files.isNotEmpty ? files.first : null;
 
@@ -86,7 +87,7 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
       child: Row(
         children: [
           AnimatedScaleButton(
-            onTap: () => ref.read(currentScreenProvider.notifier).state = AppScreen.home,
+            onTap: () => ref.navigateTo(AppScreen.home),
             child: Container(
               width: 48,
               height: 48,
