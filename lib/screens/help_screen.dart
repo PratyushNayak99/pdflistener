@@ -5,6 +5,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 import '../providers/theme_provider.dart';
 import '../providers/app_providers.dart';
 import '../widgets/animated_scale_button.dart';
+import '../models/notification_item.dart';
 
 /// HelpScreen - Help & Support screen
 ///

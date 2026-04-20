@@ -28,7 +28,7 @@ final GoRouter appRouter = GoRouter(
       path: '/login',
       pageBuilder: (context, state) => CustomTransitionPage(
         key: state.pageKey,
-        child: const LoginScreen(),
+        child: LoginScreen(onLogin: () => context.go('/home')),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(
             opacity: animation,
@@ -94,7 +94,7 @@ final GoRouter appRouter = GoRouter(
       path: '/processing',
       pageBuilder: (context, state) => CustomTransitionPage(
         key: state.pageKey,
-        child: const ProcessingScreen(onComplete: () {}),
+        child: ProcessingScreen(onComplete: () => context.go('/player')),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(
             opacity: animation,

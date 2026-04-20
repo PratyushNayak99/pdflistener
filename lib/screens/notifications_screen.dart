@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import '../providers/theme_provider.dart';
 import '../providers/app_providers.dart';
+import '../models/notification_item.dart';
 import '../widgets/animated_scale_button.dart';
 
 /// NotificationsScreen - Updates and notifications list
@@ -172,10 +173,10 @@ class NotificationsScreen extends ConsumerWidget {
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           letterSpacing: -0.2,
-                          color: isDark
+                          color: (isDark
                               ? AppColors.textPrimaryDark
-                              : AppColors.textPrimaryLight,
-                          opacity: notif.unread ? 1.0 : 0.8,
+                              : AppColors.textPrimaryLight)
+                              .withOpacity(notif.unread ? 1.0 : 0.8),
                         ),
                       ),
                     ),
