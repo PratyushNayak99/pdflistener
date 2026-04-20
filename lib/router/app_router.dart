@@ -26,28 +26,12 @@ final GoRouter appRouter = GoRouter(
   routes: [
     GoRoute(
       path: '/login',
-      pageBuilder: (context, state) => CustomTransitionPage(
-        key: state.pageKey,
-        child: LoginScreen(onLogin: () => context.go('/home')),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          return FadeTransition(
-            opacity: animation,
-            child: child,
-          );
-        },
-      ),
+      builder: (context, state) => LoginScreen(onLogin: () => context.go('/home')),
     ),
     GoRoute(
       path: '/home',
-      pageBuilder: (context, state) => CustomTransitionPage(
-        key: state.pageKey,
-        child: const HomeScreen(),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          return FadeTransition(
-            opacity: animation,
-            child: child,
-          );
-        },
+      builder: (context, state) => const HomeScreen(),
+    ),
       ),
     ),
     GoRoute(

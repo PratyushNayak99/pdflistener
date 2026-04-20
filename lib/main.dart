@@ -32,7 +32,11 @@ class PdfListenerApp extends ConsumerWidget {
 
     return MaterialApp.router(
       title: 'PDF Listener',
+      debugShowMaterialGrid: false,
       debugShowCheckedModeBanner: false,
+      debugShowPerformanceOverlay: false,
+      checkerboardRasterCacheImages: false,
+      checkerboardOffscreenLayers: false,
 
       // Theme Configuration
       themeMode: themeMode,
@@ -44,11 +48,7 @@ class PdfListenerApp extends ConsumerWidget {
 
       // Builder for global overlays
       builder: (context, child) {
-        // Ensure text scaling is disabled for consistent design
-        return MediaQuery(
-          data: MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling),
-          child: child ?? const SizedBox(),
-        );
+        return child ?? const SizedBox();
       },
     );
   }
