@@ -92,7 +92,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             fontWeight: FontWeight.bold,
                             letterSpacing: -0.5,
                             height: 1.0,
-                            color: AppColors.gray400,
+                            color: isDark ? AppColors.textSecondaryLight : AppColors.textPrimaryLight,
                           ),
                         ),
                         const SizedBox(height: 4),
