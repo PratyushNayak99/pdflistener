@@ -59,6 +59,13 @@ enum AppScreen {
   notifications,
 }
 
-final userNameProvider = StateProvider<String>((ref) => 'Alex Carter');
+import 'package:shared_preferences/shared_preferences.dart';
+
+final sharedPreferencesProvider = Provider<SharedPreferences>((ref) => throw UnimplementedError());
+
+final userNameProvider = StateProvider<String>((ref) {
+  final prefs = ref.read(sharedPreferencesProvider);
+  return prefs.getString('userName') ?? 'Alex Carter';
+});
 
 final currentScreenProvider = StateProvider<AppScreen>((ref) => AppScreen.login);

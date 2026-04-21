@@ -172,9 +172,7 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
             ),
           ),
           AnimatedScaleButton(
-            onTap: () {
-              // Settings tapped
-            },
+            onTap: () => _showPlaybackSettings(context),
             child: Container(
               width: 48,
               height: 48,
@@ -224,25 +222,28 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
             children: [
               // Animated waveform bars
               if (_isPlaying)
-                ...List.generate(5, (i) {
-                  return Positioned(
-                    left: 20 + i * 15,
-                    child: TweenAnimationBuilder(
-                      duration: Duration(milliseconds: 1200 + i * 150),
-                      tween: Tween<double>(begin: 0.2, end: 0.8),
-                      builder: (context, value, child) {
-                        return Container(
-                          width: 8,
-                          height: 200 * value,
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                        );
-                      },
-                    ),
-                  );
-                }),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(5, (i) {
+                    return Container(
+                      width: 12,
+                      height: 40,
+                      margin: const EdgeInsets.symmetric(horizontal: 6),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                    ).animate(
+                      onPlay: (controller) => controller.repeat(reverse: true),
+                    ).scaleY(
+                      begin: 0.8,
+                      end: 3.5,
+                      delay: Duration(milliseconds: i * 100),
+                      duration: const Duration(milliseconds: 600),
+                      curve: Curves.easeInOut,
+                    );
+                  }),
+                ),
               // Headphones icon
               Icon(
                 LucideIcons.headphones,
@@ -465,6 +466,54 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
             ),
           ),
         ],
+      ),
+    );
+  void _showPlaybackSettings(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        padding: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF1C1C1E) : Colors.white,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+        ),
+        child: SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Playback Speed', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black)),
+              const SizedBox(height: 16),
+              Wrap(
+                spacing: 8,
+                children: [0.5, 0.75, 1.0, 1.25, 1.5, 2.0].map((speed) {
+                  return ActionChip(
+                    label: Text('${speed}x'),
+                    onPressed: () {
+                      _audioPlayer.setSpeed(speed);
+                      Navigator.pop(context);
+                    },
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 24),
+              Text('Voice Profile', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black)),
+              const SizedBox(height: 16),
+              ListTile(
+                leading: Icon(LucideIcons.user, color: AppColors.primaryBlue),
+                title: Text('Nova (Default)', style: TextStyle(color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black)),
+                trailing: Icon(Icons.check, color: AppColors.primaryBlue),
+                onTap: () => Navigator.pop(context),
+              ),
+              ListTile(
+                leading: Icon(LucideIcons.user, color: Colors.grey),
+                title: Text('Echo', style: TextStyle(color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black)),
+                onTap: () => Navigator.pop(context),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

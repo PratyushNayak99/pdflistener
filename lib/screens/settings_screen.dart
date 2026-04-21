@@ -160,7 +160,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               AnimatedScaleButton(
                 onTap: () {
                   if (_isEditingProfile) {
-                    ref.read(userNameProvider.notifier).state = _nameController.text;
+                    final newName = _nameController.text;
+                    ref.read(userNameProvider.notifier).state = newName;
+                    ref.read(sharedPreferencesProvider).setString('userName', newName);
                   }
                   setState(() => _isEditingProfile = !_isEditingProfile);
                 },

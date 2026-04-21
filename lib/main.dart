@@ -6,8 +6,11 @@ import 'providers/theme_provider.dart';
 import 'providers/app_providers.dart';
 import 'router/app_router.dart';
 
-void main() {
+import 'package:shared_preferences/shared_preferences.dart';
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
 
   // Set status bar style
   SystemChrome.setSystemUIOverlayStyle(
@@ -18,8 +21,11 @@ void main() {
   );
 
   runApp(
-    const ProviderScope(
-      child: PdfListenerApp(),
+    ProviderScope(
+      overrides: [
+        sharedPreferencesProvider.overrideWithValue(prefs),
+      ],
+      child: const PdfListenerApp(),
     ),
   );
 }
