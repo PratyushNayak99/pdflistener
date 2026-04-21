@@ -59,4 +59,6 @@ enum AppScreen {
   notifications,
 }
 
+final userNameProvider = StateProvider<String>((ref) => 'Alex Carter');
+
 final currentScreenProvider = StateProvider<AppScreen>((ref) => AppScreen.login);

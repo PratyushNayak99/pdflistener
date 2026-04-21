@@ -24,8 +24,14 @@ class SettingsScreen extends ConsumerStatefulWidget {
 class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   bool _isEditingProfile = false;
   bool _notificationsEnabled = true;
-  final TextEditingController _nameController = TextEditingController(text: 'Alex Carter');
+  late final TextEditingController _nameController;
   final TextEditingController _emailController = TextEditingController(text: 'alex@example.com');
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController(text: ref.read(userNameProvider));
+  }
 
   @override
   void dispose() {
@@ -152,7 +158,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 ),
               ),
               AnimatedScaleButton(
-                onTap: () => setState(() => _isEditingProfile = !_isEditingProfile),
+                onTap: () {
+                  if (_isEditingProfile) {
+                    ref.read(userNameProvider.notifier).state = _nameController.text;
+                  }
+                  setState(() => _isEditingProfile = !_isEditingProfile);
+                },
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(

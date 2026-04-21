@@ -50,6 +50,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final themeMode = ref.watch(themeProvider);
+    final userName = ref.watch(userNameProvider);
     final isDark = themeMode == ThemeMode.dark;
     final files = _filteredFiles;
 
@@ -88,7 +89,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Hi Alex,',
+                          'Hi ${userName.split(' ').first},',
                           style: TextStyle(
                             fontSize: 40,
                             fontWeight: FontWeight.bold,
@@ -391,10 +392,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ),
                 ],
               ),
-              child: const Icon(
+              child: Icon(
                 LucideIcons.plus,
                 size: 32,
-                                color: AppColors.textPrimaryLight,
+                color: isDark ? const Color(0xFF1C1C1E) : Colors.white,
               ),
             ),
           ),

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:just_audio/just_audio.dart';
 import '../providers/theme_provider.dart';
+import '../router/app_router.dart';
 import '../widgets/animated_scale_button.dart';
 
 /// PlayerScreen - Full-screen audio player
@@ -145,7 +146,7 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           AnimatedScaleButton(
-            onTap: () => Navigator.of(context).pop(),
+            onTap: () => ref.navigateTo(AppScreen.home),
             child: Container(
               width: 48,
               height: 48,
