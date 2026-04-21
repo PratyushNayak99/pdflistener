@@ -95,6 +95,7 @@ class LoginScreen extends ConsumerWidget {
         width: 208,
         height: 240,
         child: Stack(
+          clipBehavior: Clip.none,
           children: [
             // Document Card Base
             Positioned.fill(

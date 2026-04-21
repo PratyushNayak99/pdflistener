@@ -72,10 +72,10 @@ class NotificationsScreen extends ConsumerWidget {
                   width: 1,
                 ),
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.chevron_left,
                 size: 24,
-                color: AppColors.textPrimaryLight,
+                color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
               ),
             ),
           ),
