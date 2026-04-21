@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:just_audio/just_audio.dart';
 import '../providers/theme_provider.dart';
+import '../providers/app_providers.dart';
 import '../router/app_router.dart';
 import '../widgets/animated_scale_button.dart';
 
