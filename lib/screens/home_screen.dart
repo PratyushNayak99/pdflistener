@@ -195,21 +195,24 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ),
       child: Row(
         children: [
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              color: isDark ? Colors.black : const Color(0xFFF8F9FB),
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(
-                color: isDark ? const Color(0xFF333333) : const Color(0xFFE5E7EB),
-                width: 1,
+          Hero(
+            tag: 'player_album_art',
+            child: Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: isDark ? Colors.black : const Color(0xFFF8F9FB),
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: isDark ? const Color(0xFF333333) : const Color(0xFFE5E7EB),
+                  width: 1,
+                ),
               ),
-            ),
-            child: const Icon(
-              LucideIcons.fileText,
-              size: 22,
-                            color: AppColors.primaryBlue,
+              child: const Icon(
+                LucideIcons.fileText,
+                size: 22,
+                color: AppColors.primaryBlue,
+              ),
             ),
           ),
           const SizedBox(width: 16),

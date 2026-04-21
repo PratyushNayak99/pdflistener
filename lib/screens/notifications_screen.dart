@@ -33,18 +33,22 @@ class NotificationsScreen extends ConsumerWidget {
               child: _buildHeader(isDark, ref),
             ),
             // Notifications List
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              sliver: SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    final notif = notifications[index];
-                    return _buildNotificationCard(notif, isDark, ref, index);
-                  },
-                  childCount: notifications.length,
-                ),
-              ),
-            ),
+            notifications.isEmpty
+                ? SliverToBoxAdapter(
+                    child: _buildEmptyState(isDark),
+                  )
+                : SliverPadding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          final notif = notifications[index];
+                          return _buildNotificationCard(notif, isDark, ref, index);
+                        },
+                        childCount: notifications.length,
+                      ),
+                    ),
+                  ),
             const SliverToBoxAdapter(
               child: SizedBox(height: 40),
             ),
@@ -100,6 +104,47 @@ class NotificationsScreen extends ConsumerWidget {
                 color: AppColors.primaryBlue,
               ),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEmptyState(bool isDark) {
+    return Padding(
+      padding: const EdgeInsets.all(40),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              color: isDark ? const Color(0xFF1C1C1E) : const Color(0xFFF2F2F7),
+              borderRadius: BorderRadius.circular(32),
+            ),
+            child: Icon(
+              LucideIcons.bellOff,
+              size: 48,
+              color: isDark ? const Color(0xFF333333) : const Color(0xFFCCCCCC),
+            ),
+          ),
+          const SizedBox(height: 24),
+          Text(
+            'No notifications yet',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+            ),
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            'We will let you know when your PDFs finish converting.',
+            style: TextStyle(
+              fontSize: 14,
+              color: AppColors.gray400,
+            ),
+            textAlign: TextAlign.center,
           ),
         ],
       ),

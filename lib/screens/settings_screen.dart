@@ -45,7 +45,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     final themeMode = ref.watch(themeProvider);
     final isDark = themeMode == ThemeMode.dark;
 
-    return Scaffold(
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
       backgroundColor: isDark ? AppColors.scaffoldBackgroundDark : AppColors.scaffoldBackgroundLight,
       body: SafeArea(
         child: CustomScrollView(

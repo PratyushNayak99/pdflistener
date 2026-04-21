@@ -195,9 +195,11 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
 
   Widget _buildAlbumArt(bool isDark) {
     return Center(
-      child: AnimatedScale(
-        scale: _isPlaying ? 1.05 : 1.0,
-        duration: const Duration(milliseconds: 500),
+      child: Hero(
+        tag: 'player_album_art',
+        child: AnimatedScale(
+          scale: _isPlaying ? 1.05 : 1.0,
+          duration: const Duration(milliseconds: 500),
         curve: Curves.easeInOut,
         child: Container(
           width: 280,

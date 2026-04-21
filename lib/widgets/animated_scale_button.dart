@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 /// AnimatedScaleButton - Replicates Framer Motion's tap animations
 ///
@@ -51,6 +52,7 @@ class _AnimatedScaleButtonState extends State<AnimatedScaleButton>
   }
 
   void _handleTapDown(TapDownDetails details) {
+    if (widget.onTap != null) HapticFeedback.lightImpact();
     _controller.forward();
   }
 

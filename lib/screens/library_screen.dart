@@ -35,7 +35,7 @@ class LibraryScreen extends ConsumerWidget {
             // File List
             files.isEmpty
                 ? SliverToBoxAdapter(
-                    child: _buildEmptyState(),
+                    child: _buildEmptyState(isDark),
                   )
                 : SliverPadding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -98,17 +98,43 @@ class LibraryScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildEmptyState() {
-    return const Padding(
-      padding: EdgeInsets.all(40),
-      child: Text(
-        'Your library is empty.',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: 15,
-          fontWeight: FontWeight.w500,
-          color: AppColors.gray400,
-        ),
+  Widget _buildEmptyState(bool isDark) {
+    return Padding(
+      padding: const EdgeInsets.all(40),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              color: isDark ? const Color(0xFF1C1C1E) : const Color(0xFFF2F2F7),
+              borderRadius: BorderRadius.circular(32),
+            ),
+            child: Icon(
+              LucideIcons.files,
+              size: 48,
+              color: isDark ? const Color(0xFF333333) : const Color(0xFFCCCCCC),
+            ),
+          ),
+          const SizedBox(height: 24),
+          Text(
+            'Library is empty',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+            ),
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            'Your converted PDFs will appear here',
+            style: TextStyle(
+              fontSize: 14,
+              color: AppColors.gray400,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }
