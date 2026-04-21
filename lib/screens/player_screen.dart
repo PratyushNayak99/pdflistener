@@ -468,6 +468,8 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
         ],
       ),
     );
+  }
+
   void _showPlaybackSettings(BuildContext context) {
     showModalBottomSheet(
       context: context,

@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/file_item.dart';
 import '../models/notification_item.dart';
 
@@ -58,8 +59,6 @@ enum AppScreen {
   help,
   notifications,
 }
-
-import 'package:shared_preferences/shared_preferences.dart';
 
 final sharedPreferencesProvider = Provider<SharedPreferences>((ref) => throw UnimplementedError());
 
