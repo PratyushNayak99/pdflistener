@@ -7,6 +7,8 @@ class FileItem {
   final String size;
   final String duration;
   final String date;
+  final String status;
+  final String? audioUrl;
 
   FileItem({
     required this.id,
@@ -14,16 +16,20 @@ class FileItem {
     required this.size,
     required this.duration,
     required this.date,
+    this.status = 'completed',
+    this.audioUrl,
   });
 
   /// Create from JSON
   factory FileItem.fromJson(Map<String, dynamic> json) {
     return FileItem(
-      id: json['id'],
-      title: json['title'],
-      size: json['size'],
-      duration: json['duration'],
-      date: json['date'],
+      id: json['id'].toString(),
+      title: json['title'] ?? '',
+      size: json['size'] ?? '',
+      duration: json['duration'] ?? '',
+      date: json['date'] ?? '',
+      status: json['status'] ?? 'completed',
+      audioUrl: json['audio_url'],
     );
   }
 
@@ -35,6 +41,8 @@ class FileItem {
       'size': size,
       'duration': duration,
       'date': date,
+      'status': status,
+      'audio_url': audioUrl,
     };
   }
 

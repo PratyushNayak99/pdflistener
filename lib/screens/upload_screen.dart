@@ -37,11 +37,25 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
       );
 
       if (result != null && result.files.single.path != null) {
-        // Navigate to processing screen
-        ref.context.navigateTo(AppScreen.processing);
+        final filePath = result.files.single.path!;
+        
+        // Upload the file
+        final apiService = ref.read(apiServiceProvider);
+        final fileItem = await apiService.uploadFile(filePath);
+        
+        // Add to our list
+        ref.read(filesProvider.notifier).addFile(fileItem);
+        
+        // Navigate to processing screen with the file item
+        ref.context.navigateTo(AppScreen.processing, extra: fileItem);
       }
     } catch (e) {
-      debugPrint('Error picking file: $e');
+      debugPrint('Error picking/uploading file: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Upload failed: $e')),
+        );
+      }
     } finally {
       if (mounted) setState(() => _isUploading = false);
     }

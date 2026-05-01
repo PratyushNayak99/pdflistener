@@ -64,11 +64,17 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: '/processing',
-      builder: (context, state) => ProcessingScreen(onComplete: () => context.go('/player')),
+      builder: (context, state) {
+        final fileItem = state.extra; // FileItem
+        return ProcessingScreen(fileItem: fileItem, onComplete: (item) => context.go('/player', extra: item));
+      },
     ),
     GoRoute(
       path: '/player',
-      builder: (context, state) => const PlayerScreen(),
+      builder: (context, state) {
+        final fileItem = state.extra; // FileItem
+        return PlayerScreen(fileItem: fileItem);
+      },
     ),
     GoRoute(
       path: '/library',
@@ -87,20 +93,20 @@ final GoRouter appRouter = GoRouter(
 
 /// Extension to navigate via WidgetRef
 extension RouterX on WidgetRef {
-  void navigateTo(AppScreen screen) {
+  void navigateTo(AppScreen screen, {Object? extra}) {
     final path = _screenPaths[screen];
     if (path != null) {
-      context.go(path);
+      context.go(path, extra: extra);
     }
   }
 }
 
 /// Extension to navigate via BuildContext
 extension RouterXContext on BuildContext {
-  void navigateTo(AppScreen screen) {
+  void navigateTo(AppScreen screen, {Object? extra}) {
     final path = _screenPaths[screen];
     if (path != null) {
-      go(path);
+      go(path, extra: extra);
     }
   }
 }

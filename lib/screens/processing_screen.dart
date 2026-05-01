@@ -4,6 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import '../providers/theme_provider.dart';
 
+import '../models/file_item.dart';
+import '../providers/app_providers.dart';
+
 /// ProcessingScreen - Conversion animation screen
 ///
 /// React equivalent: ProcessingScreen with concentric pulse circles
@@ -11,22 +14,60 @@ import '../providers/theme_provider.dart';
 /// - Center icon
 /// - Auto-navigate to player after 2.5 seconds
 class ProcessingScreen extends ConsumerStatefulWidget {
-  final VoidCallback onComplete;
+  final FileItem? fileItem;
+  final Function(FileItem) onComplete;
 
-  const ProcessingScreen({super.key, required this.onComplete});
+  const ProcessingScreen({super.key, this.fileItem, required this.onComplete});
 
   @override
   ConsumerState<ProcessingScreen> createState() => _ProcessingScreenState();
 }
 
 class _ProcessingScreenState extends ConsumerState<ProcessingScreen> {
+  bool _isCancelled = false;
+
   @override
   void initState() {
     super.initState();
-    // Auto-complete after 2.5 seconds
-    Future.delayed(const Duration(milliseconds: 2500), () {
-      if (mounted) widget.onComplete();
-    });
+    _pollStatus();
+  }
+
+  @override
+  void dispose() {
+    _isCancelled = true;
+    super.dispose();
+  }
+
+  Future<void> _pollStatus() async {
+    if (widget.fileItem == null) {
+      // Fallback
+      await Future.delayed(const Duration(milliseconds: 2500));
+      if (mounted && !_isCancelled) widget.onComplete(FileItem.initialFiles.first);
+      return;
+    }
+
+    final apiService = ref.read(apiServiceProvider);
+    
+    while (!_isCancelled) {
+      try {
+        final currentFile = await apiService.getFileStatus(widget.fileItem!.id);
+        if (currentFile.status == 'completed' || currentFile.audioUrl != null) {
+          if (mounted && !_isCancelled) widget.onComplete(currentFile);
+          break;
+        } else if (currentFile.status == 'failed') {
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Conversion failed')),
+            );
+          }
+          break;
+        }
+      } catch (e) {
+        debugPrint('Polling error: $e');
+      }
+      
+      await Future.delayed(const Duration(seconds: 2));
+    }
   }
 
   @override

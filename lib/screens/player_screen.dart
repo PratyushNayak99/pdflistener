@@ -8,6 +8,9 @@ import '../providers/app_providers.dart';
 import '../router/app_router.dart';
 import '../widgets/animated_scale_button.dart';
 
+import '../models/file_item.dart';
+import '../services/api_service.dart';
+
 /// PlayerScreen - Full-screen audio player
 ///
 /// React equivalent: PlayerScreen with playback controls
@@ -16,7 +19,9 @@ import '../widgets/animated_scale_button.dart';
 /// - Play/pause, skip, speed control
 /// - Bookmark toggle
 class PlayerScreen extends ConsumerStatefulWidget {
-  const PlayerScreen({super.key});
+  final FileItem? fileItem;
+  
+  const PlayerScreen({super.key, this.fileItem});
 
   @override
   ConsumerState<PlayerScreen> createState() => _PlayerScreenState();
@@ -28,7 +33,7 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
   double _speed = 1.0;
   bool _bookmarked = false;
   Duration _position = Duration.zero;
-  Duration _totalDuration = const Duration(minutes: 12, seconds: 45);
+  Duration _totalDuration = const Duration(minutes: 0, seconds: 0);
   bool _isDragging = false;
   Duration _dragPosition = Duration.zero;
 
@@ -39,8 +44,20 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
   }
 
   Future<void> _initAudio() async {
-    // For demo purposes, we're not loading actual audio
-    // In production: await _audioPlayer.setAsset('assets/audio/sample.mp3');
+    final apiService = ref.read(apiServiceProvider);
+    
+    if (widget.fileItem != null) {
+      try {
+        final audioUrl = '${ApiService.baseUrl}/api/v1/files/${widget.fileItem!.id}/audio';
+        await _audioPlayer.setUrl(
+          audioUrl, 
+          headers: {'Authorization': 'Bearer ${apiService.token}'}
+        );
+        _audioPlayer.play();
+      } catch (e) {
+        debugPrint('Error playing audio: $e');
+      }
+    }
 
     _audioPlayer.positionStream.listen((position) {
       if (!_isDragging && mounted) {
@@ -105,7 +122,7 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
               child: Column(
                 children: [
                   Text(
-                    'Design_Document_v2.pdf',
+                    widget.fileItem?.title ?? 'Design_Document_v2.pdf',
                     style: const TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
@@ -117,7 +134,7 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
                   ),
                   const SizedBox(height: 8),
                   const Text(
-                    'Chapter 1 - Introduction',
+                    'Now Playing',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

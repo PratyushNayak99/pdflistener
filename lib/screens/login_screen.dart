@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import '../providers/theme_provider.dart';
+import '../providers/app_providers.dart';
 import '../widgets/animated_scale_button.dart';
 
 /// LoginScreen - Onboarding/Login screen
@@ -12,13 +13,47 @@ import '../widgets/animated_scale_button.dart';
 /// - Giant quirky typography
 /// - Document card with animated waveform
 /// - Floating headphones icon
-class LoginScreen extends ConsumerWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   final VoidCallback onLogin;
 
   const LoginScreen({super.key, required this.onLogin});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends ConsumerState<LoginScreen> {
+  bool _isLoading = false;
+
+  Future<void> _handleLogin() async {
+    setState(() => _isLoading = true);
+    final apiService = ref.read(apiServiceProvider);
+    
+    try {
+      // Auto register test user if doesn't exist, then login
+      try {
+        await apiService.login('test@example.com', 'password');
+      } catch (_) {
+        await apiService.register('Test User', 'test@example.com', 'password');
+        await apiService.login('test@example.com', 'password');
+      }
+      
+      // Fetch initial data
+      await ref.read(filesProvider.notifier).fetchFiles();
+      await ref.read(notificationsProvider.notifier).fetchNotifications();
+      
+      widget.onLogin();
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to login: $e')),
+      );
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final themeMode = ref.watch(themeProvider);
     final isDark = themeMode == ThemeMode.dark;
 
@@ -219,7 +254,7 @@ class LoginScreen extends ConsumerWidget {
     return Column(
       children: [
         AnimatedScaleButton(
-          onTap: onLogin,
+          onTap: _isLoading ? null : _handleLogin,
           child: Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 22),
@@ -237,7 +272,7 @@ class LoginScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Get Started',
+                  _isLoading ? 'Logging in...' : 'Get Started',
                   style: TextStyle(
                     fontSize: 19,
                     fontWeight: FontWeight.w500,
@@ -245,11 +280,23 @@ class LoginScreen extends ConsumerWidget {
                     color: isDark ? Colors.black : Colors.white,
                   ),
                 ),
-                Icon(
-                  LucideIcons.arrowRight,
-                  size: 24,
-                  color: isDark ? Colors.black : Colors.white,
-                ),
+                if (_isLoading)
+                  SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        isDark ? Colors.black : Colors.white,
+                      ),
+                    ),
+                  )
+                else
+                  Icon(
+                    LucideIcons.arrowRight,
+                    size: 24,
+                    color: isDark ? Colors.black : Colors.white,
+                  ),
               ],
             ),
           ),

@@ -28,6 +28,9 @@ dependencies:
 
   # Preferences (persist dark mode)
   shared_preferences: ^2.2.3
+  
+  # API Client
+  http: ^1.2.0
 
   # Dashed border for upload screen
   dotted_border: ^2.1.0

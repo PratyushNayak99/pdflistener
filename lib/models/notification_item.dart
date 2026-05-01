@@ -19,10 +19,10 @@ class NotificationItem {
   /// Create from JSON
   factory NotificationItem.fromJson(Map<String, dynamic> json) {
     return NotificationItem(
-      id: json['id'],
-      title: json['title'],
-      message: json['message'],
-      time: json['time'],
+      id: json['id'].toString(),
+      title: json['title'] ?? '',
+      message: json['message'] ?? '',
+      time: json['time'] ?? '',
       unread: json['unread'] ?? false,
     );
   }
