@@ -7,12 +7,6 @@ import '../providers/app_providers.dart';
 import '../widgets/animated_scale_button.dart';
 
 /// LoginScreen - Onboarding/Login screen
-///
-/// React equivalent: LoginScreen component with motion.div
-/// - Decorative SVG line background
-/// - Giant quirky typography
-/// - Document card with animated waveform
-/// - Floating headphones icon
 class LoginScreen extends ConsumerStatefulWidget {
   final VoidCallback onLogin;
 
@@ -24,18 +18,49 @@ class LoginScreen extends ConsumerStatefulWidget {
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   bool _isLoading = false;
+  bool _isLoginMode = true;
 
-  Future<void> _handleLogin() async {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _nameController = TextEditingController(); // Only for registration
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _nameController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _handleSubmit() async {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text;
+    final name = _nameController.text.trim();
+
+    if (email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter email and password')),
+      );
+      return;
+    }
+
+    if (!_isLoginMode && name.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter your name')),
+      );
+      return;
+    }
+
     setState(() => _isLoading = true);
     final apiService = ref.read(apiServiceProvider);
     
     try {
-      // Auto register test user if doesn't exist, then login
-      try {
-        await apiService.login('test@example.com', 'password');
-      } catch (_) {
-        await apiService.register('Test User', 'test@example.com', 'password');
-        await apiService.login('test@example.com', 'password');
+      if (_isLoginMode) {
+        await apiService.login(email, password);
+      } else {
+        await apiService.register(name, email, password);
+        // After registration, auto-login
+        await apiService.login(email, password);
       }
       
       // Fetch initial data
@@ -45,7 +70,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       widget.onLogin();
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to login: $e')),
+        SnackBar(content: Text('Failed to ${_isLoginMode ? 'login' : 'register'}: $e')),
       );
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -60,160 +85,56 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-      backgroundColor: isDark ? Colors.black : Colors.white,
-      body: Stack(
-        children: [
-          // Decorative clean line background (SVG replacement)
-          Positioned.fill(
-            child: CustomPaint(
-              painter: DecorativeLinePainter(
-                color: isDark ? const Color(0xFF333333) : const Color(0xFFE5E7EB),
+        backgroundColor: isDark ? Colors.black : Colors.white,
+        body: Stack(
+          children: [
+            // Decorative clean line background
+            Positioned.fill(
+              child: CustomPaint(
+                painter: DecorativeLinePainter(
+                  color: isDark ? const Color(0xFF333333) : const Color(0xFFE5E7EB),
+                ),
               ),
             ),
-          ),
-          // Content
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 50, left: 32, right: 32),
-              child: Column(
-                children: [
-                  Expanded(
+            // Content
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32),
+                child: Center(
+                  child: SingleChildScrollView(
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        // Giant Quirky Typography
+                        const SizedBox(height: 40),
+                        // Typography
                         _buildTitle(isDark)
                             .animate()
                             .fadeIn(duration: 400.ms)
                             .slideY(begin: 0.1, end: 0, duration: 400.ms),
-                        // Minimalist Graphic Illustration
-                        Expanded(
-                          child: _buildIllustration(isDark)
-                              .animate()
-                              .fadeIn(duration: 400.ms, delay: 200.ms)
-                              .scale(begin: const Offset(0.9, 0.9), end: const Offset(1, 1), duration: 400.ms),
-                        ),
+                        
+                        const SizedBox(height: 40),
+                        
+                        // Form
+                        _buildForm(isDark)
+                            .animate()
+                            .fadeIn(duration: 400.ms, delay: 200.ms)
+                            .slideY(begin: 0.1, end: 0, duration: 400.ms, delay: 200.ms),
+
+                        const SizedBox(height: 32),
+                        
+                        // Call to Action
+                        _buildCTA(isDark)
+                            .animate()
+                            .fadeIn(duration: 400.ms, delay: 300.ms)
+                            .slideY(begin: 0.1, end: 0, duration: 400.ms, delay: 300.ms),
+                            
+                        const SizedBox(height: 40),
                       ],
                     ),
                   ),
-                  // Call to Action
-                  _buildCTA(isDark)
-                      .animate()
-                      .fadeIn(duration: 400.ms, delay: 300.ms)
-                      .slideY(begin: 0.1, end: 0, duration: 400.ms, delay: 300.ms),
-                  const SizedBox(height: 40),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-      ),
-    );
-  }
-
-  Widget _buildTitle(bool isDark) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Text(
-        'Listen to\ndocuments\nanytime with\nPDF Audio',
-        style: TextStyle(
-          fontSize: 48,
-          fontWeight: FontWeight.w500,
-          letterSpacing: -1.0,
-          height: 0.95,
-          color: isDark ? Colors.white : const Color(0xFF1C1C1E),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildIllustration(bool isDark) {
-    return Center(
-      child: SizedBox(
-        width: 208,
-        height: 240,
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            // Document Card Base
-            Positioned.fill(
-              child: AnimatedScaleButton(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: isDark
-                        ? const Color(0xFF1C1C1E)
-                        : Colors.white,
-                    borderRadius: BorderRadius.circular(36),
-                    border: Border.all(
-                      color: isDark
-                          ? const Color(0xFF1C1C1E)
-                          : const Color(0xFF1C1C1E),
-                      width: 5,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: isDark
-                            ? Colors.white.withOpacity(0.1)
-                            : const Color(0xFF1C1C1E),
-                        blurRadius: 0,
-                        offset: const Offset(10, 10),
-                        spreadRadius: 0,
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        LucideIcons.fileText,
-                        size: 64,
-                                                color: isDark ? Colors.white : const Color(0xFF1C1C1E),
-                      ),
-                      const SizedBox(height: 24),
-                      // Animated Audio Waveform inside the Doc
-                      _buildWaveform(isDark),
-                    ],
-                  ),
                 ),
               ),
-            ),
-            // Floating Detail (Headphones)
-            Positioned(
-              bottom: -24,
-              right: -24,
-              child: Container(
-                width: 88,
-                height: 88,
-                decoration: BoxDecoration(
-                  color: isDark ? Colors.black : const Color(0xFFF8F9FB),
-                  borderRadius: BorderRadius.circular(44),
-                  border: Border.all(
-                    color: isDark
-                        ? const Color(0xFF666666)
-                        : const Color(0xFF1C1C1E),
-                    width: 5,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: isDark
-                          ? Colors.white.withOpacity(0.1)
-                          : const Color(0xFF1C1C1E),
-                      blurRadius: 0,
-                      offset: const Offset(6, 6),
-                      spreadRadius: 0,
-                    ),
-                  ],
-                ),
-                child: Icon(
-                  LucideIcons.headphones,
-                  size: 36,
-                  color: isDark ? Colors.white : const Color(0xFF1C1C1E),
-                ),
-              )
-                  .animate(onPlay: (controller) => controller.repeat())
-                  .moveY(begin: 0, end: -10, duration: 2.seconds)
-                  .then()
-                  .moveY(begin: -10, end: 0, duration: 2.seconds),
             ),
           ],
         ),
@@ -221,32 +142,115 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     );
   }
 
-  Widget _buildWaveform(bool isDark) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(6, (i) {
-        final isPrimary = i == 2 || i == 4;
-        return Container(
-          width: 10,
-          margin: const EdgeInsets.only(right: 6),
-          height: 48,
-          decoration: BoxDecoration(
-            color: isPrimary
-                ? AppColors.primaryBlue
-                : isDark
-                    ? Colors.white
-                    : const Color(0xFF1C1C1E),
-            borderRadius: BorderRadius.circular(5),
+  Widget _buildTitle(bool isDark) {
+    return Text(
+      'Listen to\ndocuments\nanytime with\nPDF Audio',
+      style: TextStyle(
+        fontSize: 48,
+        fontWeight: FontWeight.w500,
+        letterSpacing: -1.0,
+        height: 0.95,
+        color: isDark ? Colors.white : const Color(0xFF1C1C1E),
+      ),
+      textAlign: TextAlign.left,
+    );
+  }
+
+  Widget _buildForm(bool isDark) {
+    final inputDecoration = InputDecoration(
+      filled: true,
+      fillColor: isDark ? const Color(0xFF1C1C1E) : const Color(0xFFF8F9FB),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide(
+          color: isDark ? const Color(0xFF333333) : const Color(0xFFE5E7EB),
+          width: 1,
+        ),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide(
+          color: isDark ? const Color(0xFF333333) : const Color(0xFFE5E7EB),
+          width: 1,
+        ),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide(
+          color: AppColors.primaryBlue,
+          width: 2,
+        ),
+      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+      hintStyle: TextStyle(
+        color: AppColors.gray400,
+        fontWeight: FontWeight.w500,
+      ),
+    );
+
+    final textStyle = TextStyle(
+      color: isDark ? Colors.white : const Color(0xFF1C1C1E),
+      fontWeight: FontWeight.w500,
+    );
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (!_isLoginMode) ...[
+          TextField(
+            controller: _nameController,
+            style: textStyle,
+            decoration: inputDecoration.copyWith(
+              hintText: 'Full Name',
+              prefixIcon: Icon(LucideIcons.user, color: AppColors.gray400),
+            ),
+            textInputAction: TextInputAction.next,
           ),
-        ).animate(onPlay: (controller) => controller.repeat(reverse: true))
-         .scaleY(
-           begin: 0.2, 
-           end: 1.0, 
-           duration: Duration(milliseconds: 1200 + i * 150), 
-           curve: Curves.easeInOut,
-           alignment: Alignment.bottomCenter
-         );
-      }),
+          const SizedBox(height: 16),
+        ],
+        TextField(
+          controller: _emailController,
+          style: textStyle,
+          keyboardType: TextInputType.emailAddress,
+          decoration: inputDecoration.copyWith(
+            hintText: 'Email Address',
+            prefixIcon: Icon(LucideIcons.mail, color: AppColors.gray400),
+          ),
+          textInputAction: TextInputAction.next,
+        ),
+        const SizedBox(height: 16),
+        TextField(
+          controller: _passwordController,
+          style: textStyle,
+          obscureText: true,
+          decoration: inputDecoration.copyWith(
+            hintText: 'Password',
+            prefixIcon: Icon(LucideIcons.lock, color: AppColors.gray400),
+          ),
+          textInputAction: TextInputAction.done,
+          onSubmitted: (_) => _handleSubmit(),
+        ),
+        const SizedBox(height: 16),
+        Align(
+          alignment: Alignment.centerRight,
+          child: TextButton(
+            onPressed: () {
+              setState(() {
+                _isLoginMode = !_isLoginMode;
+              });
+            },
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.primaryBlue,
+            ),
+            child: Text(
+              _isLoginMode ? 'Create an account' : 'Already have an account? Login',
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -254,7 +258,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     return Column(
       children: [
         AnimatedScaleButton(
-          onTap: _isLoading ? null : _handleLogin,
+          onTap: _isLoading ? null : _handleSubmit,
           child: Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 22),
@@ -272,7 +276,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  _isLoading ? 'Logging in...' : 'Get Started',
+                  _isLoading 
+                      ? 'Please wait...' 
+                      : (_isLoginMode ? 'Log In' : 'Sign Up'),
                   style: TextStyle(
                     fontSize: 19,
                     fontWeight: FontWeight.w500,
@@ -299,15 +305,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
               ],
             ),
-          ),
-        ),
-        const SizedBox(height: 24),
-        Text(
-          'Read and listen to any document.',
-          style: const TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w500,
-            color: AppColors.gray400,
           ),
         ),
       ],
