@@ -65,14 +65,14 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/processing',
       builder: (context, state) {
-        final fileItem = state.extra; // FileItem
+        final fileItem = state.extra as FileItem?; // FileItem
         return ProcessingScreen(fileItem: fileItem, onComplete: (item) => context.go('/player', extra: item));
       },
     ),
     GoRoute(
       path: '/player',
       builder: (context, state) {
-        final fileItem = state.extra; // FileItem
+        final fileItem = state.extra as FileItem?; // FileItem
         return PlayerScreen(fileItem: fileItem);
       },
     ),
