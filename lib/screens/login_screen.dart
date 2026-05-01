@@ -57,10 +57,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     try {
       if (_isLoginMode) {
         await apiService.login(email, password);
+        // Default to email prefix if just logging in
+        ref.read(userNameProvider.notifier).state = email.split('@')[0];
       } else {
         await apiService.register(name, email, password);
         // After registration, auto-login
         await apiService.login(email, password);
+        // Set to their actual name
+        ref.read(userNameProvider.notifier).state = name;
       }
       
       // Fetch initial data
