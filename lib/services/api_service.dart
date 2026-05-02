@@ -5,7 +5,7 @@ import '../models/notification_item.dart';
 
 class ApiService {
   // Use the live Render backend URL
-  static const String baseUrl = 'https://pdflistener-backend.onrender.com';
+  static final String baseUrl = 'https://pdflistener-backend-1.onrender.com';
   String? _token;
 
   // Singleton pattern
