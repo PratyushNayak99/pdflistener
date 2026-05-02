@@ -77,7 +77,7 @@ class ApiService {
     final streamedResponse = await request.send();
     final response = await http.Response.fromStream(streamedResponse);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 202) {
       final data = jsonDecode(response.body);
       return FileItem.fromJson(data);
     } else {
